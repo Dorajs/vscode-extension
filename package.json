@@ -1,0 +1,127 @@
+{
+	"name": "dora-vscode",
+	"displayName": "Dora",
+	"description": "Support for Dora addon development",
+	"version": "0.0.1",
+	"author": "Lin Zhang",
+	"publisher": "linroid",
+	"engines": {
+		"vscode": "^1.30.0"
+	},
+	"icon": "resources/icon.png",
+	"repository": {
+		"type": "git",
+		"url": "https://github.com/linroid/dora-vscode"
+	},
+	"homepage": "https://github.com/linroid/dora-vscode/blob/master/README.md",
+	"keywords": [
+		"Dora"
+	],
+	"categories": [
+		"Other"
+	],
+	"preview": true,
+	"activationEvents": [
+		"onDebug",
+		"onLanguage:javascript",
+		"onLanguage:json",
+		"onCommand:dora.setHost",
+		"onCommand:dora.pushAddon",
+		"onCommand:dora.pullAddon"
+	],
+	"keybindings": [
+		{
+			"command": "dora.pushAddon",
+			"key": "ctrl+shift+r",
+			"mac": "cmd+shift+r",
+			"when": "editorTextFocus"
+		}
+	],
+	"main": "./out/extension.js",
+	"contributes": {
+		"commands": [
+			{
+				"command": "dora.pushAddon",
+				"title": "Dora: Push"
+			},
+			{
+				"command": "dora.pullAddon",
+				"title": "Dora: Pull"
+			},
+			{
+				"command": "dora.setHost",
+				"title": "Dora: Set host"
+			}
+		],
+		"viewsContainers": {
+			"activitybar": [
+				{
+					"id": "dora",
+					"title": "Dora",
+					"icon": "resources/icon.svg"
+				}
+			]
+		},
+		"views": {
+			"dora": [
+				{
+					"id": "dora.addonExplorer",
+					"name": "addons"
+				}
+			]
+		},
+		"menus": {
+			"editor/title": [
+				{
+					"command": "dora.pushAddon"
+				},
+				{
+					"command": "dora.setHost"
+				}
+			]
+		},
+		"configuration": {
+			"type": "object",
+			"title": "Dora configuration",
+			"properties": {
+				"dora.enable": {
+					"type": "boolean",
+					"description": "Whether this project is a dora addon",
+					"default": false
+				},
+				"dora.host": {
+					"type": "string",
+					"description": "Host for connect Dora"
+				},
+				"dora.autoPush": {
+					"type": "boolean",
+					"default": false,
+					"description": "Whether to push addon file automatically."
+				}
+			}
+		}
+	},
+	"scripts": {
+		"vscode:prepublish": "yarn run compile",
+		"compile": "tsc -p ./",
+		"watch": "tsc -watch -p ./",
+		"postinstall": "node ./node_modules/vscode/bin/install",
+		"test": "yarn run compile && node ./node_modules/vscode/bin/test"
+	},
+	"dependencies": {
+		"@types/request-promise": "^4.1.44",
+		"adm-zip": "^0.4.13",
+		"archiver": "^3.0.0",
+		"request": "^2.88.0",
+		"request-promise": "^4.2.4",
+		"tmp": "^0.1.0"
+	},
+	"devDependencies": {
+		"@types/adm-zip": "^0.4.32",
+		"@types/mocha": "^2.2.42",
+		"@types/node": "^10.12.21",
+		"tslint": "^5.12.1",
+		"typescript": "^3.3.1",
+		"vscode": "^1.1.28"
+	}
+}
