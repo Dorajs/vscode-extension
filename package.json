@@ -106,11 +106,6 @@
 			"type": "object",
 			"title": "Dora configuration",
 			"properties": {
-				"dora.enable": {
-					"type": "boolean",
-					"description": "Whether this project is a dora addon",
-					"default": false
-				},
 				"dora.host": {
 					"type": "string",
 					"description": "Host for connect Dora"
