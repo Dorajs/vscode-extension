@@ -1,9 +1,9 @@
 {
-	"name": "dora-vscode",
+	"name": "dora",
 	"displayName": "Dora",
-	"description": "Support for Dora addon development",
+	"description": "Support Dora addon development",
 	"version": "0.0.1",
-	"author": "Lin Zhang",
+	"author": "Lin Zhang <linroid@gmail.com>",
 	"publisher": "linroid",
 	"engines": {
 		"vscode": "^1.30.0"
@@ -27,56 +27,78 @@
 		"onLanguage:json",
 		"onCommand:dora.setHost",
 		"onCommand:dora.pushAddon",
-		"onCommand:dora.pullAddon"
+		"onCommand:dora.pullAddon",
+		"onCommand:dora.refreshExplorer",
+		"onView:dora.addonExplorer"
 	],
-	"keybindings": [
-		{
-			"command": "dora.pushAddon",
-			"key": "ctrl+shift+r",
-			"mac": "cmd+shift+r",
-			"when": "editorTextFocus"
-		}
-	],
+	"keybindings": [{
+		"command": "dora.pushAddon",
+		"key": "ctrl+shift+r",
+		"mac": "cmd+shift+r",
+		"when": "editorTextFocus"
+	}],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [
-			{
+		"commands": [{
 				"command": "dora.pushAddon",
-				"title": "Dora: Push"
+				"title": "Dora: Push",
+				"category": "Dora",
+				"icon": {
+					"light": "resources/light/push.svg",
+					"dark": "resources/dark/push.svg"
+				}
 			},
 			{
 				"command": "dora.pullAddon",
+				"category": "Dora",
 				"title": "Dora: Pull"
 			},
 			{
 				"command": "dora.setHost",
-				"title": "Dora: Set host"
+				"category": "Dora",
+				"title": "Dora: Set host",
+				"icon": {
+					"light": "resources/light/phone.svg",
+					"dark": "resources/dark/phone.svg"
+				}
+			},
+			{
+				"command": "dora.refreshExplorer",
+				"category": "Dora",
+				"title": "Refresh",
+				"icon": {
+					"light": "resources/light/refresh.svg",
+					"dark": "resources/dark/refresh.svg"
+				}
 			}
 		],
 		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "dora",
-					"title": "Dora",
-					"icon": "resources/icon.svg"
-				}
-			]
+			"activitybar": [{
+				"id": "dora",
+				"title": "Dora",
+				"icon": "resources/icon.svg"
+			}]
 		},
 		"views": {
-			"dora": [
-				{
-					"id": "dora.addonExplorer",
-					"name": "addons"
-				}
-			]
+			"dora": [{
+				"id": "dora.addonExplorer",
+				"name": "Addons"
+			}]
 		},
 		"menus": {
-			"editor/title": [
-				{
-					"command": "dora.pushAddon"
+			"editor/title": [{
+				"command": "dora.pushAddon",
+				"group": "navigation"
+			}],
+			"view/title": [{
+					"command": "dora.refreshExplorer",
+					"when": "view == dora.addonExplorer",
+					"group": "navigation@1"
 				},
 				{
-					"command": "dora.setHost"
+					"command": "dora.setHost",
+					"when": "view == dora.addonExplorer",
+					"group": "navigation@2"
 				}
 			]
 		},

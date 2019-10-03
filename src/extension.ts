@@ -14,21 +14,26 @@ export function activate(context: vscode.ExtensionContext) {
 	// Use the console to output diagnostic information (console.log) and errors (console.error)
 	// This line of code will only be executed once when your extension is activated
 	console.log('Congratulations, your extension "dora-vscode" is now active!');
-	const workbenchConfig = vscode.workspace.getConfiguration('workbench');
-	console.log(workbenchConfig);
 	console.log(vscode.workspace.getConfiguration('dora'));
-	if (getConfig().get('autoPush')) {
-		// Observe file changes
-		bindWatcher();
-		vscode.window.onDidChangeActiveTextEditor(bindWatcher);
-		console.log('enable auth push');
-	}
+	bindWatcher();
+	vscode.window.onDidChangeActiveTextEditor(bindWatcher);
 	context.subscriptions.push(
 		vscode.commands.registerCommand('dora.setHost', setHost),
 		vscode.commands.registerCommand('dora.pushAddon', pushAddon),
 		vscode.commands.registerCommand('dora.pullAddon', pullAddon),
-		vscode.window.createTreeView("dora.addonExplorer", { treeDataProvider: addonTreeDataProvider, showCollapseAll: true })
+		vscode.commands.registerCommand('dora.refreshExplorer', refreshExplorer),
+		vscode.window.createTreeView("dora.addonExplorer", { treeDataProvider: addonTreeDataProvider, showCollapseAll: false }),
+		vscode.workspace.onDidChangeConfiguration(onConfigChanged)
 	);
+}
+
+function onConfigChanged(event: any) {
+	console.log('onConfigChanged');
+	if (event.affectsConfiguration('dora.autoPush')) {
+		if (vscode.window.activeTextEditor) {
+
+		}
+	}
 }
 
 function bindWatcher() {
@@ -41,6 +46,10 @@ function bindWatcher() {
 		watcher.onDidChange(syncFileIfNeeded);
 		watchers.set(path, watcher);
 	}
+}
+
+function refreshExplorer() {
+	addonTreeDataProvider.refresh();
 }
 
 async function setHost(holder: string = '') {
@@ -69,7 +78,6 @@ async function setHost(holder: string = '') {
 }
 
 function syncFileIfNeeded() {
-	console.log('syncFileIfNeeded');
 	if (getConfig().get('autoPush')) {
 		pushAddon();
 	}
