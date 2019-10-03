@@ -1,6 +1,17 @@
 # dora-vscode
 
-Dora 扩展开发的 VSCode 扩展，可以将 VSCode 作为 Dora 的代码编辑器，支持修改文件后自动 Push 到 Dora！
+Dora 的 VSCode 开发插件，可以将 VSCode 作为 Dora 的代码编辑器，支持修改文件后自动 Push 到 Dora！
+<p align="center">
+  <img src="https://raw.githubusercontent.com/linroid/dora-vscode/master/docs/explorer.png" alt="Addon explorer" />
+</p>
+<p align="center">
+  <a href="https://marketplace.visualstudio.com/items?itemName=linroid.dora">
+    <img src="https://img.shields.io/visual-studio-marketplace/d/linroid.dora.svg?style=flat-square" alt="">
+  </a>
+  <a href="https://github.com/linroid/dora-vscode/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/linroid/dora-vscode.svg?style=flat-square" alt="">
+  </a>
+</p>
 
 # 如何使用?
  0. 确保你的手机和电脑处于同一 WiFi 网络下
@@ -14,7 +25,7 @@ Dora 扩展开发的 VSCode 扩展，可以将 VSCode 作为 Dora 的代码编�
 
 # 配置项
  - `dora.host`: 你的手机 IP，可在 Dora App 代码编辑器中查看
- - `dora.authPush`: 是否在文件发生变更时自动推送代码（建议设置为 workspace，只在 Dora 扩展工程中生效），默认为 false
+ - `dora.autoPush`: 是否在文件发生变更时自动推送代码（建议设置为 workspace，只在 Dora 扩展工程中生效），默认为 false
 
 # Contribute
  如果你有任何能优化这个插件的想法，欢迎提交 PR 或在 Issues 中留言。
