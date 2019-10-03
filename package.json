@@ -2,7 +2,7 @@
 	"name": "dora",
 	"displayName": "Dora",
 	"description": "Support Dora addon development",
-	"version": "0.0.1",
+	"version": "0.1.0",
 	"author": "Lin Zhang <linroid@gmail.com>",
 	"publisher": "linroid",
 	"engines": {
