@@ -2,8 +2,9 @@
 	"name": "dora",
 	"displayName": "Dora",
 	"description": "Support Dora addon development",
-	"version": "0.1.0",
-	"author": "Lin Zhang <linroid@gmail.com>",
+	"version": "0.2.1",
+	"author": "linroid <linroid@gmail.com>",
+	"license": "MIT",
 	"publisher": "linroid",
 	"engines": {
 		"vscode": "^1.30.0"
@@ -31,15 +32,18 @@
 		"onCommand:dora.refreshExplorer",
 		"onView:dora.addonExplorer"
 	],
-	"keybindings": [{
-		"command": "dora.pushAddon",
-		"key": "ctrl+shift+r",
-		"mac": "cmd+shift+r",
-		"when": "editorTextFocus"
-	}],
+	"keybindings": [
+		{
+			"command": "dora.pushAddon",
+			"key": "ctrl+shift+r",
+			"mac": "cmd+shift+r",
+			"when": "editorTextFocus"
+		}
+	],
 	"main": "./out/extension.js",
 	"contributes": {
-		"commands": [{
+		"commands": [
+			{
 				"command": "dora.pushAddon",
 				"title": "Dora: Push",
 				"category": "Dora",
@@ -73,24 +77,31 @@
 			}
 		],
 		"viewsContainers": {
-			"activitybar": [{
-				"id": "dora",
-				"title": "Dora",
-				"icon": "resources/icon.svg"
-			}]
+			"activitybar": [
+				{
+					"id": "dora",
+					"title": "Dora",
+					"icon": "resources/icon.svg"
+				}
+			]
 		},
 		"views": {
-			"dora": [{
-				"id": "dora.addonExplorer",
-				"name": "Addons"
-			}]
+			"dora": [
+				{
+					"id": "dora.addonExplorer",
+					"name": "Addons"
+				}
+			]
 		},
 		"menus": {
-			"editor/title": [{
-				"command": "dora.pushAddon",
-				"group": "navigation"
-			}],
-			"view/title": [{
+			"editor/title": [
+				{
+					"command": "dora.pushAddon",
+					"group": "navigation"
+				}
+			],
+			"view/title": [
+				{
 					"command": "dora.refreshExplorer",
 					"when": "view == dora.addonExplorer",
 					"group": "navigation@1"
@@ -128,7 +139,6 @@
 	"dependencies": {
 		"@types/request-promise": "^4.1.44",
 		"adm-zip": "^0.4.13",
-		"archiver": "^3.0.0",
 		"request": "^2.88.0",
 		"request-promise": "^4.2.4",
 		"tmp": "^0.1.0"
