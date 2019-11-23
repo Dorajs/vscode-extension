@@ -23,3 +23,14 @@ export class Addon {
     return this.data.author;
   }
 }
+
+export class Result {
+  constructor(private data: any) { }
+
+  public get ret() {
+    return this.data.ret;
+  }
+  public get msg() {
+    return this.data.msg;
+  }
+}

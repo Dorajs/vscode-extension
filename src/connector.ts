@@ -1,4 +1,4 @@
-import { Addon } from './model';
+import { Addon, Result } from './model';
 import * as vscode from 'vscode';
 import fs = require('fs');
 import request = require('request-promise');
@@ -45,15 +45,16 @@ export class Connector {
         });
     }
 
-    public async push(path: fs.PathLike) {
+    public async push(path: fs.PathLike): Promise<Result> {
         console.log(`push ${path}`);
         const url = `${this.endpoint}/addon`;
-        return request.post({
+        let json = await request.post({
             url: url,
             formData: {
                 "file": fs.createReadStream(path)
             }
         });
+        return JSON.parse(json);
     }
 
     private get endpoint(): string {
