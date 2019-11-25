@@ -137,16 +137,19 @@
 		"test": "yarn run compile && node ./node_modules/vscode/bin/test"
 	},
 	"dependencies": {
-		"@types/request-promise": "^4.1.44",
-		"adm-zip": "^0.4.13",
+		"fs-extra": "^8.1.0",
 		"request": "^2.88.0",
 		"request-promise": "^4.2.4",
+		"targz": "^1.0.1",
 		"tmp": "^0.1.0"
 	},
 	"devDependencies": {
-		"@types/adm-zip": "^0.4.32",
 		"@types/mocha": "^2.2.42",
 		"@types/node": "^10.12.21",
+		"@types/fs-extra": "^8.0.1",
+		"@types/request-promise": "^4.1.44",
+		"@types/targz": "^1.0.0",
+		"@types/tmp": "^0.1.0",
 		"tslint": "^5.12.1",
 		"typescript": "^3.3.1",
 		"vscode": "^1.1.28"
