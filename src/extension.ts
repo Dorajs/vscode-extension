@@ -6,8 +6,7 @@ import path = require('path');
 import { addonTreeDataProvider } from './explorer/AddonTreeDataProvider';
 import { connector } from './connector';
 import fs = require('fs-extra');
-import targz = require('targz');
-import tmp = require('tmp');
+import * as AdmZip from 'adm-zip';
 
 const watchers = new Map<string, vscode.FileSystemWatcher>();
 // this method is called when your extension is activated
@@ -107,29 +106,20 @@ async function pullAddon(addon: Addon) {
   if (!directory || directory.length < 1) {
     return;
   }
-  const dest = directory[0].fsPath;
-  if (dest === undefined) {
+  const folder = directory[0].fsPath;
+  if (folder === undefined) {
     return;
   }
   try {
     let file = await connector.pull(addon);
-    console.log('pull finished');
-    let tmpDir = tmp.dirSync().name;
-    console.log(tmpDir);
-    targz.decompress({
-      src: file as string,
-      dest: tmpDir
-    }, function (err) {
-      if (err) {
-        throw err;
-      }
-      fs.moveSync(tmpDir + "/package", dest, {
-        overwrite: true
-      });
-      fs.unlinkSync(file);
-      const uri = vscode.Uri.file(dest);
-      vscode.commands.executeCommand('vscode.openFolder', uri);
-    });
+    console.log('pull finished, starting unzip...');
+    var zip = new AdmZip(<string>file);
+    zip.extractAllTo(folder);
+    fs.unlinkSync(file);
+    const uri = vscode.Uri.file(folder);
+    console.log('unzip successfully, open the folder');
+    showMessage(`Pull ${addon.label} successfully!`);
+    vscode.commands.executeCommand('vscode.openFolder', uri);
   } catch (err) {
     console.error(err);
     showError('Download addon unsuccessfully');
