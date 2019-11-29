@@ -102,21 +102,21 @@ async function pullAddon(addon: Addon) {
     canSelectMany: false,
     openLabel: "Select",
   };
-  const directory: vscode.Uri[] | undefined = await vscode.window.showOpenDialog(options);
-  if (!directory || directory.length < 1) {
+  const directory: vscode.Uri | undefined = await vscode.window.showSaveDialog(options);
+  if (!directory) {
     return;
   }
-  const folder = directory[0].fsPath;
-  if (folder === undefined) {
+  const dest = directory.fsPath;
+  if (dest === undefined) {
     return;
   }
   try {
     let file = await connector.pull(addon);
     console.log('pull finished, starting unzip...');
     var zip = new AdmZip(<string>file);
-    zip.extractAllTo(folder);
+    zip.extractAllTo(dest);
     fs.unlinkSync(file);
-    const uri = vscode.Uri.file(folder);
+    const uri = vscode.Uri.file(dest);
     console.log('unzip successfully, open the folder');
     showMessage(`Pull ${addon.label} successfully!`);
     vscode.commands.executeCommand('vscode.openFolder', uri);

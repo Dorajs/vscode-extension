@@ -4,11 +4,9 @@ All notable changes to the "dora-vscode" extension will be documented in this fi
 
 Check [Keep a Changelog](http://keepachangelog.com/) for recommendations on how to structure this file.
 
-## 0.3.0
-- 更新安装包格式为 tar.gz 
-
-## 0.2.1
+## 0.3.1
 - 使用 yarn pack 打包
+- 选择保存目录时使用 `vscode.window.showSaveDialog` API
 
 ## 0.1.0
 第一个版本，支持以下特性：
