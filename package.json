@@ -12,9 +12,9 @@
 	"icon": "resources/icon.png",
 	"repository": {
 		"type": "git",
-		"url": "https://github.com/linroid/dora-vscode"
+		"url": "https://github.com/DoraKit/vscode-extension"
 	},
-	"homepage": "https://github.com/linroid/dora-vscode/blob/master/README.md",
+	"homepage": "https://github.com/DoraKit/vscode-extension/blob/master/README.md",
 	"keywords": [
 		"Dora"
 	],

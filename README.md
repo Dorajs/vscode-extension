@@ -2,14 +2,14 @@
 
 Dora 的 VSCode 开发插件，可以将 VSCode 作为 Dora 的代码编辑器，支持修改文件后自动 Push 到 Dora！
 <p align="center">
-  <img src="https://raw.githubusercontent.com/linroid/dora-vscode/master/docs/explorer.png" alt="Addon explorer" />
+  <img src="https://raw.githubusercontent.com/DoraKit/vscode-extension/master/docs/explorer.png" alt="Addon explorer" />
 </p>
 <p align="center">
   <a href="https://marketplace.visualstudio.com/items?itemName=linroid.dora">
     <img src="https://img.shields.io/visual-studio-marketplace/d/linroid.dora.svg?style=flat-square" alt="">
   </a>
-  <a href="https://github.com/linroid/dora-vscode/blob/master/LICENSE">
-    <img src="https://img.shields.io/github/license/linroid/dora-vscode.svg?style=flat-square" alt="">
+  <a href="https://github.com/DoraKit/vscode-extension/blob/master/LICENSE">
+    <img src="https://img.shields.io/github/license/DoraKit/vscode-extension.svg?style=flat-square" alt="">
   </a>
 </p>
 
