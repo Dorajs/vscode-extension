@@ -15,7 +15,7 @@ export function activate(context: vscode.ExtensionContext) {
   // Use the console to output diagnostic information (console.log) and errors (console.error)
   // This line of code will only be executed once when your extension is activated
   console.log('Congratulations, your extension "dora-vscode" is now active!');
-  console.log(vscode.workspace.getConfiguration('dora'));
+  console.log(vscode.workspace.getConfiguration('dorajs'));
   bindWatcher();
   vscode.window.onDidChangeActiveTextEditor(bindWatcher);
   context.subscriptions.push(
@@ -64,7 +64,7 @@ async function setHost(holder: string = '') {
   if (isIP(ip)) {
     let pong = await connector.ping(ip);
     if (!pong) {
-      showError("Connot connect to Dora, check your network");
+      showError("Connot connect Dora.js, check your network");
       setHost(ip);
       return;
     }
@@ -176,20 +176,20 @@ function parentFolder(filePath: string) {
 }
 
 function getConfig() {
-  return vscode.workspace.getConfiguration('dora');
+  return vscode.workspace.getConfiguration('dorajs');
 }
 
 // Show info message
 function showMessage(msg: string) {
   console.log(msg);
-  vscode.window.showInformationMessage(`[Dora] ${msg}`);
+  vscode.window.showInformationMessage(`[Dora.js] ${msg}`);
 }
 
 // Show error message
 function showError(error: string) {
   console.error(error);
   if (vscode.debug) {
-    vscode.window.showErrorMessage(`[Dora] ${error}`);
+    vscode.window.showErrorMessage(`[Dora.js] ${error}`);
   }
 }
 

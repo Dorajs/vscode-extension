@@ -1,5 +1,3 @@
-import * as vscode from 'vscode';
-
 export class Addon {
   constructor(private data: any) { }
 

@@ -62,7 +62,7 @@ export class Connector {
   }
 
   private get endpoint(): string {
-    const config = vscode.workspace.getConfiguration('dora');
+    const config = vscode.workspace.getConfiguration('dorajs');
     const host = config.get('host');
     if (!host) {
       throw new Error('Host not set');

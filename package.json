@@ -119,7 +119,7 @@
 			"properties": {
 				"dorajs.host": {
 					"type": "string",
-					"description": "Host for connect Dora.js"
+					"description": "Host to connect Dora.js"
 				},
 				"dorajs.autoPush": {
 					"type": "boolean",
