@@ -28,11 +28,11 @@ Dora.js 的 VSCode 开发插件，可以将 VSCode 作为 Dora.js 的代码编�
  - `dorajs.autoPush`: 是否在文件发生变更时自动推送代码（建议设置为 workspace，只在 Dora.js 扩展工程中生效），默认为 false
 
 # Contribute
- 如果你有任何能优化这个插件的想法，欢迎提交 PR 或在 Issues 中留言。
+ 如果你有任何能优化这个插件的想法，欢迎提交 PR 或在 [Issues](https://github.com/DoraKit/vscode-extension/issues) 中留言。
 
 # Contact
- - GitHub: [linroid](https://github.com/linroid)
+ - Docs: [docs.dorajs.com](https://docs.dorajs.com/)
+ - GitHub: [linroid](https://github.com/DoraKit/vscode-extension)
  - Twitter: [@linroid](https://twitter.com/linroid)
  - Weibo: [@你是个好人啦](https://weibo.com/ekstone)
- - Docs: [dorajs.com](https://dorajs.com/)
  - Email: [linroid@gmail.com](linroid@gmail.com)
