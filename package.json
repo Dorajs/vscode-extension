@@ -2,7 +2,7 @@
 	"name": "dora",
 	"displayName": "Dora.js",
 	"description": "Support Dora.js addon development",
-	"version": "0.4.0",
+	"version": "0.4.1",
 	"author": "Lin Zhang <linroid@gmail.com>",
 	"license": "MIT",
 	"publisher": "linroid",
