@@ -16,7 +16,7 @@ export class AddonTreeDataProvider implements vscode.TreeDataProvider<Addon> {
                 label: element.label,
                 collapsibleState: vscode.TreeItemCollapsibleState.None,
                 command: {
-                    command: "dora.setHost",
+                    command: "dorajs.setHost",
                     title: "Connect Dora",
                 },
             };
@@ -26,7 +26,7 @@ export class AddonTreeDataProvider implements vscode.TreeDataProvider<Addon> {
             label: element.label,
             collapsibleState: vscode.TreeItemCollapsibleState.None,
             command: {
-                command: "dora.pullAddon",
+                command: "dorajs.pullAddon",
                 title: "Pull addon files",
                 arguments: [element]
             },

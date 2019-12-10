@@ -19,18 +19,18 @@ export function activate(context: vscode.ExtensionContext) {
   bindWatcher();
   vscode.window.onDidChangeActiveTextEditor(bindWatcher);
   context.subscriptions.push(
-    vscode.commands.registerCommand('dora.setHost', setHost),
-    vscode.commands.registerCommand('dora.pushAddon', pushAddon),
-    vscode.commands.registerCommand('dora.pullAddon', pullAddon),
-    vscode.commands.registerCommand('dora.refreshExplorer', refreshExplorer),
-    vscode.window.createTreeView("dora.addonExplorer", { treeDataProvider: addonTreeDataProvider, showCollapseAll: false }),
+    vscode.commands.registerCommand('dorajs.setHost', setHost),
+    vscode.commands.registerCommand('dorajs.pushAddon', pushAddon),
+    vscode.commands.registerCommand('dorajs.pullAddon', pullAddon),
+    vscode.commands.registerCommand('dorajs.refreshExplorer', refreshExplorer),
+    vscode.window.createTreeView("dorajs.addonExplorer", { treeDataProvider: addonTreeDataProvider, showCollapseAll: false }),
     vscode.workspace.onDidChangeConfiguration(onConfigChanged)
   );
 }
 
 function onConfigChanged(event: any) {
   console.log('onConfigChanged');
-  if (event.affectsConfiguration('dora.autoPush')) {
+  if (event.affectsConfiguration('dorajs.autoPush')) {
     if (vscode.window.activeTextEditor) {
 
     }
@@ -144,7 +144,7 @@ async function pushAddon() {
     directory = parentFolder(directory);
   }
   if (directory === directoryRoot) {
-    showError("This project is not a Dora addon project");
+    showError("This project is not a Dora.js addon project");
     return;
   }
   // Sync as package

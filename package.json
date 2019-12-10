@@ -1,8 +1,8 @@
 {
 	"name": "dora",
-	"displayName": "Dora",
-	"description": "Support Dora addon development",
-	"version": "0.3.1",
+	"displayName": "Dora.js",
+	"description": "Support Dora.js addon development",
+	"version": "0.4.0",
 	"author": "linroid <linroid@gmail.com>",
 	"license": "MIT",
 	"publisher": "linroid",
@@ -16,7 +16,7 @@
 	},
 	"homepage": "https://github.com/DoraKit/vscode-extension/blob/master/README.md",
 	"keywords": [
-		"Dora"
+		"Dora.js", "vscode-extension"
 	],
 	"categories": [
 		"Other"
@@ -26,15 +26,15 @@
 		"onDebug",
 		"onLanguage:javascript",
 		"onLanguage:json",
-		"onCommand:dora.setHost",
-		"onCommand:dora.pushAddon",
-		"onCommand:dora.pullAddon",
-		"onCommand:dora.refreshExplorer",
-		"onView:dora.addonExplorer"
+		"onCommand:dorajs.setHost",
+		"onCommand:dorajs.pushAddon",
+		"onCommand:dorajs.pullAddon",
+		"onCommand:dorajs.refreshExplorer",
+		"onView:dorajs.addonExplorer"
 	],
 	"keybindings": [
 		{
-			"command": "dora.pushAddon",
+			"command": "dorajs.pushAddon",
 			"key": "ctrl+shift+r",
 			"mac": "cmd+shift+r",
 			"when": "editorTextFocus"
@@ -44,32 +44,32 @@
 	"contributes": {
 		"commands": [
 			{
-				"command": "dora.pushAddon",
-				"title": "Dora: Push",
-				"category": "Dora",
+				"command": "dorajs.pushAddon",
+				"title": "Dora.js: Push",
+				"category": "Dora.js",
 				"icon": {
 					"light": "resources/light/push.svg",
 					"dark": "resources/dark/push.svg"
 				}
 			},
 			{
-				"command": "dora.pullAddon",
-				"category": "Dora",
-				"title": "Dora: Pull"
+				"command": "dorajs.pullAddon",
+				"category": "Dora.js",
+				"title": "Dora.js: Pull"
 			},
 			{
-				"command": "dora.setHost",
-				"category": "Dora",
-				"title": "Dora: Set host",
+				"command": "dorajs.setHost",
+				"category": "Dora.js",
+				"title": "Dora.js: Set host",
 				"icon": {
 					"light": "resources/light/phone.svg",
 					"dark": "resources/dark/phone.svg"
 				}
 			},
 			{
-				"command": "dora.refreshExplorer",
-				"category": "Dora",
-				"title": "Refresh",
+				"command": "dorajs.refreshExplorer",
+				"category": "Dora.js",
+				"title": "Dora.js: Refresh",
 				"icon": {
 					"light": "resources/light/refresh.svg",
 					"dark": "resources/dark/refresh.svg"
@@ -80,7 +80,7 @@
 			"activitybar": [
 				{
 					"id": "dora",
-					"title": "Dora",
+					"title": "Dora.js",
 					"icon": "resources/icon.svg"
 				}
 			]
@@ -88,7 +88,7 @@
 		"views": {
 			"dora": [
 				{
-					"id": "dora.addonExplorer",
+					"id": "dorajs.addonExplorer",
 					"name": "Addons"
 				}
 			]
@@ -96,32 +96,32 @@
 		"menus": {
 			"editor/title": [
 				{
-					"command": "dora.pushAddon",
+					"command": "dorajs.pushAddon",
 					"group": "navigation"
 				}
 			],
 			"view/title": [
 				{
-					"command": "dora.refreshExplorer",
-					"when": "view == dora.addonExplorer",
+					"command": "dorajs.refreshExplorer",
+					"when": "view == dorajs.addonExplorer",
 					"group": "navigation@1"
 				},
 				{
-					"command": "dora.setHost",
-					"when": "view == dora.addonExplorer",
+					"command": "dorajs.setHost",
+					"when": "view == dorajs.addonExplorer",
 					"group": "navigation@2"
 				}
 			]
 		},
 		"configuration": {
 			"type": "object",
-			"title": "Dora configuration",
+			"title": "Dora.js configuration",
 			"properties": {
-				"dora.host": {
+				"dorajs.host": {
 					"type": "string",
-					"description": "Host for connect Dora"
+					"description": "Host for connect Dora.js"
 				},
-				"dora.autoPush": {
+				"dorajs.autoPush": {
 					"type": "boolean",
 					"default": false,
 					"description": "Whether to push addon file automatically."
