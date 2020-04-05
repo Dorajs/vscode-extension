@@ -19,8 +19,9 @@ export function activate(context: vscode.ExtensionContext) {
   vscode.window.onDidChangeActiveTextEditor(bindWatcher)
   context.subscriptions.push(
     vscode.commands.registerCommand('dorajs.setHost', setHost),
-    vscode.commands.registerCommand('dorajs.pushAddon', pushAddon),
-    vscode.commands.registerCommand('dorajs.pullAddon', pullAddon),
+    vscode.commands.registerCommand('dorajs.push', push),
+    vscode.commands.registerCommand('dorajs.pull', pull),
+    vscode.commands.registerCommand('dorajs.download', download),
     vscode.commands.registerCommand('dorajs.refreshExplorer', refreshExplorer),
     vscode.window.createTreeView('dorajs.addonExplorer', {
       treeDataProvider: addonTreeDataProvider,
@@ -81,11 +82,27 @@ async function setHost(holder: string = '') {
 
 function syncFileIfNeeded() {
   if (getConfig().get('autoPush')) {
-    pushAddon()
+    push()
   }
 }
 
-async function pullAddon(addon: Addon) {
+async function workspace(): Promise<string> {
+  return ''
+}
+
+function selectDefaultPath(): string {
+  if (!vscode.workspace.workspaceFolders) {
+    return os.homedir()
+  }
+  const p = vscode.workspace.workspaceFolders[0].uri.fsPath
+  return path.basename(p)
+}
+
+function isDirEmpty(dir: string): boolean {
+  return fs.readdirSync(dir).length == 0
+}
+
+async function download(addon: Addon) {
   if (addon === undefined || typeof addon !== 'object') {
     showError('Must select an addon')
     return
@@ -95,25 +112,29 @@ async function pullAddon(addon: Addon) {
     showError('Host is unavailable')
     return
   }
-  const defaultUri: vscode.Uri | undefined = vscode.workspace.workspaceFolders
-    ? vscode.workspace.workspaceFolders[0].uri
-    : undefined
-  const options: vscode.OpenDialogOptions = {
-    defaultUri,
+  // const defaultPath = path.resolve(selectDefaultPath(), addon.displayName)
+  // const directory = await vscode.window.showSaveDialog(options)
+  const openTarget = await vscode.window.showOpenDialog({
+    defaultUri: vscode.Uri.file(selectDefaultPath()),
+    openLabel: '保存到这个目录',
     canSelectFiles: false,
     canSelectFolders: true,
-    canSelectMany: false,
-    openLabel: 'Select'
-  }
-  const directory: vscode.Uri | undefined = await vscode.window.showSaveDialog(
-    options
-  )
-  if (!directory) {
+    canSelectMany: false
+  })
+  if (!openTarget) {
     return
   }
-  const dest = directory.fsPath
+  const dest = openTarget[0].fsPath
   if (dest === undefined) {
     return
+  }
+  if (!isDirEmpty(dest)) {
+    console.log(`${dest} is not empty`)
+    const result = await vscode.window.showWarningMessage(`${dest}\n文件夹非空，是否覆盖`, { modal: true }, "确认覆盖")
+    if (result == undefined) {
+      return
+    }
+    console.log(result)
   }
   try {
     let file = await connector.pull(addon)
@@ -122,19 +143,27 @@ async function pullAddon(addon: Addon) {
     zip.extractAllTo(dest)
     fs.unlinkSync(file)
     const uri = vscode.Uri.file(dest)
-    console.log('unzip successfully, open the folder')
-    showMessage(`Pull ${addon.displayName} successfully!`)
+    console.log(`unzip successfully, open the folder: ${dest}`)
+    showMessage(`成功下载 ${addon.displayName}!`)
     vscode.commands.executeCommand('vscode.openFolder', uri)
   } catch (err) {
     console.error(err)
-    showError('Download addon unsuccessfully')
+    showError('Failed to download addon')
   }
 }
 
-async function pushAddon() {
+async function pull() {
   let editor = vscode.window.activeTextEditor
   if (!editor) {
-    showError('No active text editor, please open any text file')
+    showError('请选打开扩展目录下的任意一个文件')
+    return
+  }
+}
+
+async function push() {
+  let editor = vscode.window.activeTextEditor
+  if (!editor) {
+    showError('请选打开扩展目录下的任意一个文件')
     return
   }
   var filePath = path.resolve(editor.document.fileName)
@@ -143,12 +172,7 @@ async function pushAddon() {
   while (directory !== directoryRoot) {
     let files = fs.readdirSync(directory)
     const identifiers = ['package.json']
-    if (
-      identifiers.reduce(
-        (value, identifier) => value && files.includes(identifier),
-        true
-      )
-    ) {
+    if (identifiers.reduce((value, identifier) => value && files.includes(identifier), true)) {
       break
     }
     directory = parentFolder(directory)

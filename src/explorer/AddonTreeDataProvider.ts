@@ -26,7 +26,7 @@ export class AddonTreeDataProvider implements vscode.TreeDataProvider<Addon> {
       label: element.displayName,
       collapsibleState: vscode.TreeItemCollapsibleState.None,
       command: {
-        command: 'dorajs.pullAddon',
+        command: 'dorajs.download',
         title: 'Pull addon files',
         arguments: [element]
       },
