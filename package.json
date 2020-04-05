@@ -1,8 +1,8 @@
 {
   "name": "dora",
   "displayName": "Dora.js",
-  "description": "Support Dora.js addon development",
-  "version": "0.4.1",
+  "description": "Dora.js 扩展开发插件",
+  "version": "0.5.0",
   "author": "Lin Zhang <linroid@gmail.com>",
   "license": "MIT",
   "publisher": "linroid",
@@ -28,14 +28,15 @@
     "onLanguage:javascript",
     "onLanguage:json",
     "onCommand:dorajs.setHost",
-    "onCommand:dorajs.pushAddon",
-    "onCommand:dorajs.pullAddon",
+    "onCommand:dorajs.push",
+    "onCommand:dorajs.pull",
+    "onCommand:dorajs.download",
     "onCommand:dorajs.refreshExplorer",
     "onView:dorajs.addonExplorer"
   ],
   "keybindings": [
     {
-      "command": "dorajs.pushAddon",
+      "command": "dorajs.push",
       "key": "ctrl+shift+r",
       "mac": "cmd+shift+r",
       "when": "editorTextFocus"
@@ -45,8 +46,8 @@
   "contributes": {
     "commands": [
       {
-        "command": "dorajs.pushAddon",
-        "title": "Dora.js: Push",
+        "command": "dorajs.push",
+        "title": "Dora.js: 推送到手机",
         "category": "Dora.js",
         "icon": {
           "light": "resources/light/push.svg",
@@ -54,14 +55,23 @@
         }
       },
       {
-        "command": "dorajs.pullAddon",
+        "command": "dorajs.pull",
+        "title": "Dora.js: 从手机同步文件到当前目录",
         "category": "Dora.js",
-        "title": "Dora.js: Pull"
+        "icon": {
+          "light": "resources/light/pull.svg",
+          "dark": "resources/dark/pull.svg"
+        }
+      },
+      {
+        "command": "dorajs.download",
+        "category": "Dora.js",
+        "title": "Dora.js: 从手机下载扩展文件"
       },
       {
         "command": "dorajs.setHost",
         "category": "Dora.js",
-        "title": "Dora.js: Set host",
+        "title": "Dora.js: 设置手机 IP",
         "icon": {
           "light": "resources/light/phone.svg",
           "dark": "resources/dark/phone.svg"
@@ -70,7 +80,7 @@
       {
         "command": "dorajs.refreshExplorer",
         "category": "Dora.js",
-        "title": "Dora.js: Refresh",
+        "title": "Dora.js: 刷新",
         "icon": {
           "light": "resources/light/refresh.svg",
           "dark": "resources/dark/refresh.svg"
@@ -90,17 +100,18 @@
       "dora": [
         {
           "id": "dorajs.addonExplorer",
-          "name": "Addons"
+          "name": "Dora.js"
         }
       ]
     },
     "menus": {
       "editor/title": [
         {
-          "command": "dorajs.pushAddon",
+          "command": "dorajs.push",
           "group": "navigation"
         }
       ],
+      "explorer/context": [],
       "view/title": [
         {
           "command": "dorajs.refreshExplorer",
@@ -111,21 +122,26 @@
           "command": "dorajs.setHost",
           "when": "view == dorajs.addonExplorer",
           "group": "navigation@2"
+        },
+        {
+          "command": "dorajs.pull",
+          "when": "view == dorajs.addonExplorer",
+          "group": "navigation"
         }
       ]
     },
     "configuration": {
       "type": "object",
-      "title": "Dora.js configuration",
+      "title": "Dora.js 配置项",
       "properties": {
         "dorajs.host": {
           "type": "string",
-          "description": "Host to connect Dora.js"
+          "description": "手机 IP 地址"
         },
         "dorajs.autoPush": {
           "type": "boolean",
           "default": false,
-          "description": "Whether to push addon file automatically."
+          "description": "是否在文件变更时自动推送到手机"
         }
       }
     }
@@ -143,6 +159,7 @@
     "archiver": "^3.1.1",
     "fs-extra": "^8.1.0",
     "global": "^4.4.0",
+    "read-package-json": "^2.1.1",
     "request": "^2.88.0",
     "request-promise": "^4.2.4",
     "tmp": "^0.1.0",

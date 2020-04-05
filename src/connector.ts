@@ -34,9 +34,9 @@ export class Connector {
     return JSON.parse(json)
   }
 
-  public async pull(addon: Addon): Promise<fs.PathLike> {
-    let url = `${this.endpoint}/addon/${addon.uuid}?pull`
-    console.log(`pull addon: ${addon.displayName}(${url})`)
+  public async download(uuid: string): Promise<fs.PathLike> {
+    let url = `${this.endpoint}/addon/${uuid}?pull`
+    console.log(`pull addon: (${url})`)
     var tmp = require('tmp')
     var file = tmp.fileSync().name
     console.log(`tmp save file: ${file}`)

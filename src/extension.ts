@@ -86,8 +86,36 @@ function syncFileIfNeeded() {
   }
 }
 
+async function parseJson(dir: string): Promise<any> {
+  let file = path.resolve(dir, 'package.json')
+  var readJson = require('read-package-json')
+  return new Promise(function (resolve, reject) {
+    readJson(file, console.error, false, function (er: any, data: any) {
+      if (er) {
+        console.error(`An error occur when reading ${file}`)
+        reject(er)
+        return
+      }
+      resolve(data)
+    })
+  })
+}
+
 async function workspace(): Promise<string> {
-  return ''
+  const workspaceFolders = vscode.workspace.workspaceFolders
+  if (!workspaceFolders) {
+    return Promise.reject("请先打开一个 Dora.js 扩展工程")
+  }
+  if (workspaceFolders.length > 1) {
+    return Promise.reject("还不支持多工作空间，请仅打开一个扩展工程")
+  }
+  const folder = workspaceFolders[0].uri.fsPath
+  // let editor = vscode.window.activeTextEditor
+  // if (!editor) {
+  //   showError('请选打开扩展目录下的任意一个文件')
+  //   return
+  // }
+  return Promise.resolve(folder)
 }
 
 function selectDefaultPath(): string {
@@ -130,14 +158,18 @@ async function download(addon: Addon) {
   }
   if (!isDirEmpty(dest)) {
     console.log(`${dest} is not empty`)
-    const result = await vscode.window.showWarningMessage(`${dest}\n文件夹非空，是否覆盖`, { modal: true }, "确认覆盖")
+    const result = await vscode.window.showWarningMessage(
+      `${dest}\n文件夹非空，是否覆盖`,
+      { modal: true },
+      '确认覆盖'
+    )
     if (result == undefined) {
       return
     }
     console.log(result)
   }
   try {
-    let file = await connector.pull(addon)
+    let file = await connector.download(addon.uuid)
     console.log('pull finished, starting unzip...')
     var zip = new AdmZip(<string>file)
     zip.extractAllTo(dest)
@@ -153,37 +185,31 @@ async function download(addon: Addon) {
 }
 
 async function pull() {
-  let editor = vscode.window.activeTextEditor
-  if (!editor) {
-    showError('请选打开扩展目录下的任意一个文件')
+  const folder = await workspace()
+  const json = await parseJson(folder)
+  if (!json.uuid) {
+    showError('请打开一个 Dora.js 扩展工程')
     return
   }
+  let file = await connector.download(json.uuid)
+  console.log('pull finished, starting unzip...')
+  var zip = new AdmZip(<string>file)
+  zip.extractAllTo(folder)
+  fs.unlinkSync(file)
+  console.log(`unzip successfully, open the folder: ${folder}`)
+  showMessage(`成功同步 ${json.displayName} 所有文件到当前工程!`)
 }
 
 async function push() {
-  let editor = vscode.window.activeTextEditor
-  if (!editor) {
-    showError('请选打开扩展目录下的任意一个文件')
-    return
-  }
-  var filePath = path.resolve(editor.document.fileName)
-  var directory = parentFolder(filePath)
-  var directoryRoot = path.parse(directory).root
-  while (directory !== directoryRoot) {
-    let files = fs.readdirSync(directory)
-    const identifiers = ['package.json']
-    if (identifiers.reduce((value, identifier) => value && files.includes(identifier), true)) {
-      break
-    }
-    directory = parentFolder(directory)
-  }
-  if (directory === directoryRoot) {
-    showError('This project is not a Dora.js addon project')
+  const folder = await workspace()
+  const json = await parseJson(folder)
+  if (!json.uuid) {
+    showError('请打开一个 Dora.js 扩展工程')
     return
   }
   try {
     console.log(`start build`)
-    const file = await build(directory)
+    const file = await build(folder)
     console.log(`build success`)
     let resp = await connector.push(file)
     console.log(`push finished: code=${resp.code}, message=${resp.message}`)
