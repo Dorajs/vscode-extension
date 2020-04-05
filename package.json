@@ -1,159 +1,162 @@
 {
-	"name": "dora",
-	"displayName": "Dora.js",
-	"description": "Support Dora.js addon development",
-	"version": "0.4.1",
-	"author": "Lin Zhang <linroid@gmail.com>",
-	"license": "MIT",
-	"publisher": "linroid",
-	"engines": {
-		"vscode": "^1.30.0"
-	},
-	"icon": "resources/icon.png",
-	"repository": {
-		"type": "git",
-		"url": "https://github.com/DoraKit/vscode-extension"
-	},
-	"homepage": "https://github.com/DoraKit/vscode-extension/blob/master/README.md",
-	"keywords": [
-		"Dora.js", "vscode-extension"
-	],
-	"categories": [
-		"Other"
-	],
-	"preview": true,
-	"activationEvents": [
-		"onDebug",
-		"onLanguage:javascript",
-		"onLanguage:json",
-		"onCommand:dorajs.setHost",
-		"onCommand:dorajs.pushAddon",
-		"onCommand:dorajs.pullAddon",
-		"onCommand:dorajs.refreshExplorer",
-		"onView:dorajs.addonExplorer"
-	],
-	"keybindings": [
-		{
-			"command": "dorajs.pushAddon",
-			"key": "ctrl+shift+r",
-			"mac": "cmd+shift+r",
-			"when": "editorTextFocus"
-		}
-	],
-	"main": "./out/extension.js",
-	"contributes": {
-		"commands": [
-			{
-				"command": "dorajs.pushAddon",
-				"title": "Dora.js: Push",
-				"category": "Dora.js",
-				"icon": {
-					"light": "resources/light/push.svg",
-					"dark": "resources/dark/push.svg"
-				}
-			},
-			{
-				"command": "dorajs.pullAddon",
-				"category": "Dora.js",
-				"title": "Dora.js: Pull"
-			},
-			{
-				"command": "dorajs.setHost",
-				"category": "Dora.js",
-				"title": "Dora.js: Set host",
-				"icon": {
-					"light": "resources/light/phone.svg",
-					"dark": "resources/dark/phone.svg"
-				}
-			},
-			{
-				"command": "dorajs.refreshExplorer",
-				"category": "Dora.js",
-				"title": "Dora.js: Refresh",
-				"icon": {
-					"light": "resources/light/refresh.svg",
-					"dark": "resources/dark/refresh.svg"
-				}
-			}
-		],
-		"viewsContainers": {
-			"activitybar": [
-				{
-					"id": "dora",
-					"title": "Dora.js",
-					"icon": "resources/icon.svg"
-				}
-			]
-		},
-		"views": {
-			"dora": [
-				{
-					"id": "dorajs.addonExplorer",
-					"name": "Addons"
-				}
-			]
-		},
-		"menus": {
-			"editor/title": [
-				{
-					"command": "dorajs.pushAddon",
-					"group": "navigation"
-				}
-			],
-			"view/title": [
-				{
-					"command": "dorajs.refreshExplorer",
-					"when": "view == dorajs.addonExplorer",
-					"group": "navigation@1"
-				},
-				{
-					"command": "dorajs.setHost",
-					"when": "view == dorajs.addonExplorer",
-					"group": "navigation@2"
-				}
-			]
-		},
-		"configuration": {
-			"type": "object",
-			"title": "Dora.js configuration",
-			"properties": {
-				"dorajs.host": {
-					"type": "string",
-					"description": "Host to connect Dora.js"
-				},
-				"dorajs.autoPush": {
-					"type": "boolean",
-					"default": false,
-					"description": "Whether to push addon file automatically."
-				}
-			}
-		}
-	},
-	"scripts": {
-		"vscode:prepublish": "yarn run compile",
-		"compile": "tsc -p ./",
-		"watch": "tsc -watch -p ./",
-		"postinstall": "node ./node_modules/vscode/bin/install",
-		"test": "yarn run compile && node ./node_modules/vscode/bin/test"
-	},
-	"dependencies": {
-		"@types/adm-zip": "^0.4.32",
-		"adm-zip": "^0.4.13",
-		"fs-extra": "^8.1.0",
-		"request": "^2.88.0",
-		"request-promise": "^4.2.4",
-		"targz": "^1.0.1",
-		"tmp": "^0.1.0"
-	},
-	"devDependencies": {
-		"@types/fs-extra": "^8.0.1",
-		"@types/mocha": "^2.2.42",
-		"@types/node": "^10.12.21",
-		"@types/request-promise": "^4.1.44",
-		"@types/targz": "^1.0.0",
-		"@types/tmp": "^0.1.0",
-		"tslint": "^5.12.1",
-		"typescript": "^3.3.1",
-		"vscode": "^1.1.28"
-	}
+  "name": "dora",
+  "displayName": "Dora.js",
+  "description": "Support Dora.js addon development",
+  "version": "0.4.1",
+  "author": "Lin Zhang <linroid@gmail.com>",
+  "license": "MIT",
+  "publisher": "linroid",
+  "engines": {
+    "vscode": "^1.30.0"
+  },
+  "icon": "resources/icon.png",
+  "repository": {
+    "type": "git",
+    "url": "https://github.com/DoraKit/vscode-extension"
+  },
+  "homepage": "https://github.com/DoraKit/vscode-extension/blob/master/README.md",
+  "keywords": [
+    "Dora.js",
+    "vscode-extension"
+  ],
+  "categories": [
+    "Other"
+  ],
+  "preview": true,
+  "activationEvents": [
+    "onDebug",
+    "onLanguage:javascript",
+    "onLanguage:json",
+    "onCommand:dorajs.setHost",
+    "onCommand:dorajs.pushAddon",
+    "onCommand:dorajs.pullAddon",
+    "onCommand:dorajs.refreshExplorer",
+    "onView:dorajs.addonExplorer"
+  ],
+  "keybindings": [
+    {
+      "command": "dorajs.pushAddon",
+      "key": "ctrl+shift+r",
+      "mac": "cmd+shift+r",
+      "when": "editorTextFocus"
+    }
+  ],
+  "main": "./out/extension.js",
+  "contributes": {
+    "commands": [
+      {
+        "command": "dorajs.pushAddon",
+        "title": "Dora.js: Push",
+        "category": "Dora.js",
+        "icon": {
+          "light": "resources/light/push.svg",
+          "dark": "resources/dark/push.svg"
+        }
+      },
+      {
+        "command": "dorajs.pullAddon",
+        "category": "Dora.js",
+        "title": "Dora.js: Pull"
+      },
+      {
+        "command": "dorajs.setHost",
+        "category": "Dora.js",
+        "title": "Dora.js: Set host",
+        "icon": {
+          "light": "resources/light/phone.svg",
+          "dark": "resources/dark/phone.svg"
+        }
+      },
+      {
+        "command": "dorajs.refreshExplorer",
+        "category": "Dora.js",
+        "title": "Dora.js: Refresh",
+        "icon": {
+          "light": "resources/light/refresh.svg",
+          "dark": "resources/dark/refresh.svg"
+        }
+      }
+    ],
+    "viewsContainers": {
+      "activitybar": [
+        {
+          "id": "dora",
+          "title": "Dora.js",
+          "icon": "resources/icon.svg"
+        }
+      ]
+    },
+    "views": {
+      "dora": [
+        {
+          "id": "dorajs.addonExplorer",
+          "name": "Addons"
+        }
+      ]
+    },
+    "menus": {
+      "editor/title": [
+        {
+          "command": "dorajs.pushAddon",
+          "group": "navigation"
+        }
+      ],
+      "view/title": [
+        {
+          "command": "dorajs.refreshExplorer",
+          "when": "view == dorajs.addonExplorer",
+          "group": "navigation@1"
+        },
+        {
+          "command": "dorajs.setHost",
+          "when": "view == dorajs.addonExplorer",
+          "group": "navigation@2"
+        }
+      ]
+    },
+    "configuration": {
+      "type": "object",
+      "title": "Dora.js configuration",
+      "properties": {
+        "dorajs.host": {
+          "type": "string",
+          "description": "Host to connect Dora.js"
+        },
+        "dorajs.autoPush": {
+          "type": "boolean",
+          "default": false,
+          "description": "Whether to push addon file automatically."
+        }
+      }
+    }
+  },
+  "scripts": {
+    "vscode:prepublish": "yarn run compile",
+    "compile": "tsc -p ./",
+    "watch": "tsc -watch -p ./",
+    "postinstall": "node ./node_modules/vscode/bin/install",
+    "test": "yarn run compile && node ./node_modules/vscode/bin/test"
+  },
+  "dependencies": {
+    "@types/adm-zip": "^0.4.32",
+    "adm-zip": "^0.4.13",
+    "fs-extra": "^8.1.0",
+    "global": "^4.4.0",
+    "request": "^2.88.0",
+    "request-promise": "^4.2.4",
+    "targz": "^1.0.1",
+    "tmp": "^0.1.0",
+    "ts-node": "^8.5.4"
+  },
+  "devDependencies": {
+    "@types/fs-extra": "^8.0.1",
+    "@types/mocha": "^2.2.42",
+    "@types/node": "^10.12.21",
+    "@types/request-promise": "^4.1.44",
+    "@types/targz": "^1.0.0",
+    "@types/tmp": "^0.1.0",
+    "tslint": "^5.12.1",
+    "typescript": "^3.3.1",
+    "vscode": "^1.1.28"
+  }
 }

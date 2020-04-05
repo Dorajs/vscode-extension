@@ -1,34 +1,34 @@
 export class Addon {
-  constructor(private data: any) { }
+  constructor(private data: any) {}
 
   public get id(): number {
-    return this.data.id;
+    return this.data.id
   }
 
   public get uuid(): string {
-    return this.data.uuid;
+    return this.data.uuid
   }
 
-  public get label(): string {
-    return this.data.label;
+  public get displayName(): string {
+    return this.data.displayName || this.data.label
   }
 
   public get version(): string {
-    return this.data.version;
+    return this.data.version
   }
 
   public get author(): string {
-    return this.data.author;
+    return this.data.author
   }
 }
 
 export class Result {
-  constructor(private data: any) { }
+  constructor(private data: any) {}
 
-  public get ret() {
-    return this.data.ret;
+  public get code() {
+    return this.data.code
   }
-  public get msg() {
-    return this.data.msg;
+  public get message() {
+    return this.data.message
   }
 }
