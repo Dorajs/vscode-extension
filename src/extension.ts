@@ -3,11 +3,12 @@
 import * as vscode from 'vscode'
 import { Addon } from './model'
 import path = require('path')
+import os = require('os')
 import { addonTreeDataProvider } from './explorer/AddonTreeDataProvider'
 import { connector } from './connector'
 import fs = require('fs-extra')
 import * as AdmZip from 'adm-zip'
-
+let created_files: string[] = []
 const watchers = new Map<string, vscode.FileSystemWatcher>()
 // this method is called when your extension is activated
 // your extension is activated the very first time the command is executed
@@ -104,7 +105,9 @@ async function pullAddon(addon: Addon) {
     canSelectMany: false,
     openLabel: 'Select'
   }
-  const directory: vscode.Uri | undefined = await vscode.window.showSaveDialog(options)
+  const directory: vscode.Uri | undefined = await vscode.window.showSaveDialog(
+    options
+  )
   if (!directory) {
     return
   }
@@ -140,7 +143,12 @@ async function pushAddon() {
   while (directory !== directoryRoot) {
     let files = fs.readdirSync(directory)
     const identifiers = ['package.json']
-    if (identifiers.reduce((value, identifier) => value && files.includes(identifier),true)) {
+    if (
+      identifiers.reduce(
+        (value, identifier) => value && files.includes(identifier),
+        true
+      )
+    ) {
       break
     }
     directory = parentFolder(directory)
@@ -148,10 +156,6 @@ async function pushAddon() {
   if (directory === directoryRoot) {
     showError('This project is not a Dora.js addon project')
     return
-  }
-  // Sync as package
-  if (!fs.existsSync(path.join(directory, 'dist'))) {
-    fs.mkdirSync(path.join(directory, 'dist'))
   }
   try {
     console.log(`start build`)
@@ -165,11 +169,33 @@ async function pushAddon() {
 }
 
 async function build(srcFolder: string): Promise<fs.PathLike> {
-  var name = path.basename(srcFolder)
-  var dest = path.resolve(srcFolder, `dist/${name}.dora`)
-  const { execSync } = require('child_process')
-  execSync(`yarn pack --cwd=${srcFolder} -f ${dest}`)
-  return Promise.resolve(dest)
+  const uniqueFilename = require('unique-filename')
+  const dest = uniqueFilename(os.tmpdir())
+  const fs = require('fs')
+  const archiver = require('archiver')('zip')
+  const output = fs.createWriteStream(dest)
+  created_files.push(dest)
+  return new Promise((resolve, reject) => {
+    output.on('close', function () {
+      resolve(dest)
+    })
+
+    archiver.pipe(output)
+
+    // zipArchive.bulk([
+    // 	{ cwd: srcFolder, src: [], expand: true, ignore: ['node_modules/**'] }
+    // ]);
+    archiver.glob('**/*', {
+      cwd: srcFolder,
+      ignore: ['node_modules/**']
+    })
+
+    archiver.finalize(function (err: any, bytes: any) {
+      if (err) {
+        reject(err)
+      }
+    })
+  })
 }
 
 // Find the parent folder
@@ -200,4 +226,8 @@ function isIP(str: string) {
   return pattern.test(str)
 }
 // this method is called when your extension is deactivated
-export function deactivate() {}
+export function deactivate() {
+  for (const f of created_files) {
+    fs.unlink(f, console.error)
+  }
+}
