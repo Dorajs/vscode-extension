@@ -57,7 +57,7 @@ function refreshExplorer() {
 
 async function setHost(holder: string = '') {
   const ip = await vscode.window.showInputBox({
-    placeHolder: 'Example: 192.168.0.100',
+    placeHolder: '如: 192.168.0.100',
     value: holder || getConfig().get('host') || ''
   })
   if (!ip) {
@@ -66,16 +66,16 @@ async function setHost(holder: string = '') {
   if (isIP(ip)) {
     let pong = await connector.ping(ip)
     if (!pong) {
-      showError('Connot connect Dora.js, check your network')
+      showError('无法连接 Dora.js，请检查您的网络，确保和 Dora.js 处于同一个网络下')
       setHost(ip)
       return
     }
     let config = getConfig()
     config.update('host', ip, true)
-    showMessage(`Connect ${ip} success`)
+    showMessage(`已连接 ${ip}`)
     addonTreeDataProvider.refresh()
   } else {
-    showError('Invalid ip address.')
+    showError('错误的 IP 地址')
     setHost(ip)
   }
 }
@@ -204,7 +204,7 @@ async function pull() {
   zip.extractAllTo(folder)
   fs.unlinkSync(file)
   console.log(`unzip successfully, open the folder: ${folder}`)
-  showMessage(`成功同步 ${json.displayName} 所有文件到当前工程!`)
+  showMessage(`成功同步 ${json.displayName} 所有文件到当前目录!`)
 }
 
 async function push() {

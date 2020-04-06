@@ -17,7 +17,7 @@ export class AddonTreeDataProvider implements vscode.TreeDataProvider<Addon> {
         collapsibleState: vscode.TreeItemCollapsibleState.None,
         command: {
           command: 'dorajs.setHost',
-          title: 'Connect Dora.js'
+          title: '连接 Dora.js'
         }
       }
     }
@@ -27,7 +27,7 @@ export class AddonTreeDataProvider implements vscode.TreeDataProvider<Addon> {
       collapsibleState: vscode.TreeItemCollapsibleState.None,
       command: {
         command: 'dorajs.download',
-        title: 'Pull addon files',
+        title: `Download ${element.displayName}`,
         arguments: [element]
       },
       description: element.version
@@ -44,7 +44,7 @@ export class AddonTreeDataProvider implements vscode.TreeDataProvider<Addon> {
           new Addon({
             id: -1,
             uuid: null,
-            label: 'Connect Dora.js'
+            label: '连接 Dora.js'
           })
         ]
       } else {
@@ -54,6 +54,7 @@ export class AddonTreeDataProvider implements vscode.TreeDataProvider<Addon> {
   }
 
   public refresh() {
+    console.log('refresh')
     this.onDidChangeTreeDataEvent.fire()
   }
 }

@@ -6,9 +6,7 @@ import request = require('request-promise')
 export class Connector {
   public async connect(): Promise<boolean> {
     try {
-      let resp = await request.get(`${this.endpoint}/ping`, {
-        timeout: 3000
-      })
+      let resp = await request.get(`${this.endpoint}/ping`, { timeout: 3000 })
       return resp === 'pong'
     } catch (err) {
       console.error(err)
@@ -18,9 +16,7 @@ export class Connector {
 
   public async ping(ip: string): Promise<boolean> {
     try {
-      let resp = await request.get(`http://${ip}:4000/ping`, {
-        timeout: 3000
-      })
+      let resp = await request.get(`http://${ip}:4000/ping`, { timeout: 3000 })
       return resp === 'pong'
     } catch (err) {
       console.error(err)

@@ -1,8 +1,8 @@
 {
   "name": "dora",
-  "displayName": "Dora.js",
-  "description": "Dora.js 扩展开发插件",
-  "version": "0.5.0",
+  "displayName": "Dora.js 扩展开发",
+  "description": "支持 Dora.js 的扩展开发",
+  "version": "0.5.1",
   "author": "Lin Zhang <linroid@gmail.com>",
   "license": "MIT",
   "publisher": "linroid",
@@ -14,7 +14,7 @@
     "type": "git",
     "url": "https://github.com/DoraKit/vscode-extension"
   },
-  "homepage": "https://github.com/DoraKit/vscode-extension/blob/master/README.md",
+  "homepage": "https://github.com/DoraKit/vscode-extension",
   "keywords": [
     "Dora.js",
     "vscode-extension"
