@@ -157,7 +157,7 @@ async function download(addon: Addon) {
     return
   }
   if (!isDirEmpty(dest)) {
-    console.log(`${dest} is not empty`)
+    console.warn(`${dest} is not empty`)
     const result = await vscode.window.showWarningMessage(
       `${dest}\n文件夹非空，是否覆盖`,
       { modal: true },
@@ -166,7 +166,6 @@ async function download(addon: Addon) {
     if (result == undefined) {
       return
     }
-    console.log(result)
   }
   try {
     let file = await connector.download(addon.uuid)
@@ -189,6 +188,14 @@ async function pull() {
   const json = await parseJson(folder)
   if (!json.uuid) {
     showError('请打开一个 Dora.js 扩展工程')
+    return
+  }
+  const result = await vscode.window.showWarningMessage(
+    `是否从手机同步 ${json.displayName} 的文件到当前目录？此操作会覆盖 ${folder} 目录的文件`,
+    { modal: true },
+    '确认覆盖'
+  )
+  if (result == undefined) {
     return
   }
   let file = await connector.download(json.uuid)
