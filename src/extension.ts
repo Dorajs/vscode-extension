@@ -126,8 +126,8 @@ function selectDefaultPath(): string {
   return path.basename(p)
 }
 
-function isDirEmpty(dir: string): boolean {
-  return fs.readdirSync(dir).length == 0
+function isEmptyDir(dir: string): boolean {
+  return fs.readdirSync(dir).length === 0
 }
 
 async function download(addon: Addon) {
@@ -156,14 +156,14 @@ async function download(addon: Addon) {
   if (dest === undefined) {
     return
   }
-  if (!isDirEmpty(dest)) {
+  if (!isEmptyDir(dest)) {
     console.warn(`${dest} is not empty`)
     const result = await vscode.window.showWarningMessage(
       `${dest}\n文件夹非空，是否覆盖`,
       { modal: true },
       '确认覆盖'
     )
-    if (result == undefined) {
+    if (result === undefined) {
       return
     }
   }
@@ -171,7 +171,7 @@ async function download(addon: Addon) {
     let file = await connector.download(addon.uuid)
     console.log('pull finished, starting unzip...')
     var zip = new AdmZip(<string>file)
-    zip.extractAllTo(dest)
+    zip.extractAllTo(dest, true)
     fs.unlinkSync(file)
     const uri = vscode.Uri.file(dest)
     console.log(`unzip successfully, open the folder: ${dest}`)
@@ -183,7 +183,7 @@ async function download(addon: Addon) {
   }
 }
 
-async function pull() {
+async function pull(): Promise<void> {
   const folder = await workspace()
   const json = await parseJson(folder)
   if (!json.uuid) {
@@ -195,14 +195,17 @@ async function pull() {
     { modal: true },
     '确认覆盖'
   )
-  if (result == undefined) {
+  if (result === undefined) {
     return
   }
   let file = await connector.download(json.uuid)
   console.log('pull finished, starting unzip...')
+
+  // console.log(`clear workspace`)
+
   var zip = new AdmZip(<string>file)
-  zip.extractAllTo(folder)
-  fs.unlinkSync(file)
+  zip.extractAllToAsync(<string>folder, true)
+
   console.log(`unzip successfully, open the folder: ${folder}`)
   showMessage(`成功同步 ${json.displayName} 所有文件到当前目录!`)
 }

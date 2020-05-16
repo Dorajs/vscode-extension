@@ -2,7 +2,7 @@
   "name": "dora",
   "displayName": "Dora.js 扩展开发",
   "description": "支持 Dora.js 的扩展开发",
-  "version": "0.5.1",
+  "version": "0.6.0",
   "author": "Lin Zhang <linroid@gmail.com>",
   "license": "MIT",
   "publisher": "linroid",
@@ -56,7 +56,7 @@
       },
       {
         "command": "dorajs.pull",
-        "title": "Dora.js: 从手机同步文件到当前目录",
+        "title": "从手机同步文件到当前目录",
         "category": "Dora.js",
         "icon": {
           "light": "resources/light/pull.svg",
@@ -66,12 +66,12 @@
       {
         "command": "dorajs.download",
         "category": "Dora.js",
-        "title": "Dora.js: 从手机下载扩展文件"
+        "title": "从手机下载扩展工程"
       },
       {
         "command": "dorajs.setHost",
         "category": "Dora.js",
-        "title": "Dora.js: 设置手机 IP",
+        "title": "设置手机 IP",
         "icon": {
           "light": "resources/light/phone.svg",
           "dark": "resources/dark/phone.svg"
@@ -80,7 +80,7 @@
       {
         "command": "dorajs.refreshExplorer",
         "category": "Dora.js",
-        "title": "Dora.js: 刷新",
+        "title": "刷新",
         "icon": {
           "light": "resources/light/refresh.svg",
           "dark": "resources/dark/refresh.svg"
